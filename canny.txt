@@ -1,0 +1,15 @@
+COPILATION COMMAND USED:  
+g++ -Wall -O3 -pg -fno-omit-frame-pointer -mfloat-abi=hard -mfpu=neon-fp-armv8 -march=armv8-a -mcpu=cortex-a76 -fexpensive-optimizations -funroll-loops -ftree-vectorize -ffast-math -fopenmp -o canny canny.cpp
+
+Model	Frame   Delay (ms)	Throughput (FPS)	Total Simulated Time (ms)
+cannyA9_step1	 65.280 ms	 15.319 FPS	             2050.990 ms
+cannyA9_step2	472.850 ms	 31.191 FPS	             1013.698 ms
+
+I changed image size to full hd that is "1920x1080" for getting timings.
+ timing for Gaussian smooth:1815ms , BlurX:564ms , BlurY:1193ms [step1]
+ timing for Gaussian smooth:1114ms , BlurX:236ms , BlurY:700ms [step1]
+
+I decided to implement fixed-point arithmetic for the Non_Max_Supp module in Step 2 of the model.because:
+Fixed-point arithmetic was chosen over floating-point arithmetic for better performance on embedded systems where floating-point operations can be slower and more resource-intensive.
+Using fixed-point arithmetic reduces the computation overhead, especially on ARM architectures like the Raspberry Pi, which can be optimized for fixed-point operations.
+The trade-off between precision and performance was acceptable, and image quality was not significantly compromised after performing comparisons using the ImageDiff tool.
